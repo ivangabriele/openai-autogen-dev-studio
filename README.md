@@ -2,9 +2,10 @@
 
 Generate games leveraging OpenAI agents, taking advantage of [Microsoft Autogen](https://github.com/microsoft/autogen).
 
-> ⚠️ **This is a work in progress!**<br>
-> The current code is a giant mess, and more agents are on their way to greatly improve results,
-> even though it's already working.
+> ⚠️ **Work In Progress**  
+> - The current code is a mess.  
+> - Both some Prompt Engineering and more agents are needed to improve results.  
+> BUT it's already "working" 🎉.
 
 ## Getting Started
 
