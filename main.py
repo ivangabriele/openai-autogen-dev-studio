@@ -48,13 +48,9 @@ product_owner.attach_agents(software_engineer=software_engineer)
 software_engineer.attach_agents(product_owner=product_owner)
 
 
-def run_shell_script(script):
-    return ceo_user_proxy_agent.execute_code_blocks([("sh", script)])
-
-
 COMMON_FUNCTION_MAP = {
     "read_file": actions.read_file,
-    "run_shell_script": run_shell_script,
+    "run_bash_command": actions.run_bash_command,
     "run_rust_file": actions.run_rust_file,
     "write_file": actions.write_file,
 }

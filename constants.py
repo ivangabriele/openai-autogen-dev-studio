@@ -31,14 +31,14 @@ COMMON_LLM_CONFIG = {
             },
         },
         {
-            "name": "run_shell_script",
-            "description": "Run a shell script and return the execution result, including errors if any.",
+            "name": "run_bash_command",
+            "description": "Run a bash command and return the output, including errors if any.",
             "parameters": {
                 "type": "object",
                 "properties": {
-                    "script": {
+                    "command": {
                         "type": "string",
-                        "description": "Valid shell script to execute.",
+                        "description": "Bash command.",
                     },
                 },
                 "required": ["command"],
@@ -55,7 +55,7 @@ COMMON_LLM_CONFIG = {
                         "description": "Rust file path.",
                     },
                 },
-                "required": ["command"],
+                "required": ["rust_file_path"],
             },
         },
         {
@@ -73,7 +73,7 @@ COMMON_LLM_CONFIG = {
                         "description": """Content to write.""",
                     },
                 },
-                "required": ["file_source", "relative_path"],
+                "required": ["relative_path", "file_source"],
             },
         },
     ],

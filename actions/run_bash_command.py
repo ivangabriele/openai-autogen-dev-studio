@@ -3,10 +3,10 @@ import subprocess
 from constants import PROJECT_DIRECTORY_PATH
 
 
-def run_bash_command(script: str) -> str:
-    print(f"[DEBUG] Command: `{script}`...")
+def run_bash_command(command: str) -> str:
+    print(f"[DEBUG] Command: `{command}`...")
     result = subprocess.run(
-        script,
+        command,
         cwd=PROJECT_DIRECTORY_PATH,
         shell=True,
         stderr=subprocess.PIPE,
@@ -19,5 +19,5 @@ def run_bash_command(script: str) -> str:
     else:
         output = f"[ERROR] {result.stderr.decode('utf-8')}"
 
-    print(f"[DEBUG] Output: `{script}`...")
+    print(f"[DEBUG] Output: `{command}`...")
     return output
