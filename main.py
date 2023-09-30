@@ -89,7 +89,8 @@ ceo_user_proxy_agent.initiate_chat(
     recipient=group_chat_manager,
     message=utils.clean_text(
         """
-        Product Owner, develop and run a CLI snake game. In Rust.
+        Product Owner, quickly develop and run a basic CLI snake game in Node.js.
+        `node` and `npm` are already installed.
         """,
     ),
 )
