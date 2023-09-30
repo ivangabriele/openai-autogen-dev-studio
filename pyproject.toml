@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "openai-autogen-game-studio"
+version = "0.1.0"
+description = "Generate games leveraging OpenAI agents, taking advantage of Microsoft Autogen OpenAI Agent."
+authors = ["Ivan Gabriele <ivan.gabriele@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+# pyautogen = { git = "https://github.com/microsoft/autogen", rev = "funcall_role" }
+python = "^3.10"
+pyautogen = { extras = ["mathchat"], version = "^0.1.4" }
+ipython = "^8.16.0"
+
+[tool.poetry.group.dev.dependencies]
+mypi = "^0.0.3"
+pytest = "^7.4.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

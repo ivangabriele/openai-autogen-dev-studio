@@ -1,0 +1,21 @@
+[
+  {
+    "model": "gpt-3.5-turbo-16k",
+    "api_key": "[OPEN_AI_API_KEY]"
+  },
+  {
+    "model": "[AZURE_OPENAI_STUDIO_DEPLOYMENT_NAME]",
+    "api_key": "[AZURE_OPENAI_API_KEY]",
+    "api_base": "https://[AZURE_OPENAI_RESOURCE_NAME].openai.azure.com",
+    "api_type": "azure",
+    "api_version": "2023-08-01-preview"
+  },
+  {
+    "model": "gpt-4",
+    "api_key": "[OPEN_AI_API_KEY]"
+  },
+  {
+    "model": "gpt-4-32k",
+    "api_key": "[OPEN_AI_API_KEY]"
+  }
+]
