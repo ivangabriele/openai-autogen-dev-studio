@@ -14,8 +14,9 @@ We use OpenAI API in our case.
 """
 
 from autogen import GroupChat, GroupChatManager, UserProxyAgent
+import actions
 from agents import ProductOwner, SoftwareEngineer
-from constants import FULL_LLM_CONFIG
+from constants import COMMON_LLM_CONFIG, PROJECT_DIRECTORY_NAME
 import utils
 
 
@@ -24,10 +25,9 @@ import utils
 # or ignore step, to let the agent interactions continue from there.
 ceo_user_proxy_agent = UserProxyAgent(
     "CEO",
-    # code_execution_config={"work_dir": "coding"},
-    code_execution_config={"work_dir": "coding"},
+    code_execution_config={"work_dir": PROJECT_DIRECTORY_NAME},
     human_input_mode="NEVER",
-    llm_config=FULL_LLM_CONFIG,
+    llm_config=COMMON_LLM_CONFIG,
     # is_termination_msg=lambda x: x.get("content", "").rstrip().endswith("TERMINATE"),
     # max_consecutive_auto_reply=10,
     system_message=utils.clean_text(
@@ -52,34 +52,21 @@ def run_shell_script(script):
     return ceo_user_proxy_agent.execute_code_blocks([("sh", script)])
 
 
-def software_engineer_ask_ceo(message: str):
-    software_engineer.as_assistant_agent.initiate_chat(
-        recipient=ceo_user_proxy_agent, message=message
-    )
-
-    print(
-        f"[DEBUG] software_engineer_ask_ceo() > last_message() = {software_engineer.as_assistant_agent.last_message()}"
-    )
-    return software_engineer.as_assistant_agent.last_message()["content"]
-
+COMMON_FUNCTION_MAP = {
+    "read_file": actions.read_file,
+    "run_shell_script": run_shell_script,
+    "run_rust_file": actions.run_rust_file,
+    "write_file": actions.write_file,
+}
 
 ceo_user_proxy_agent.register_function(
-    function_map={
-        # "product_owner_ask_software_engineer": product_owner.ask_software_engineer,
-        "run_shell_script": run_shell_script,
-        # "software_engineer_ask_ceo": software_engineer.ask_ceo,
-        # "software_engineer_ask_product_owner": software_engineer.ask_product_owner,
-    },
+    function_map=COMMON_FUNCTION_MAP,
 )
 product_owner.as_assistant_agent.register_function(
-    function_map={
-        "run_shell_script": run_shell_script,
-    },
+    function_map=COMMON_FUNCTION_MAP,
 )
 software_engineer.as_assistant_agent.register_function(
-    function_map={
-        "run_shell_script": run_shell_script,
-    },
+    function_map=COMMON_FUNCTION_MAP,
 )
 
 group_chat = GroupChat(
@@ -93,7 +80,9 @@ group_chat = GroupChat(
     max_round=100,
 )
 
-group_chat_manager = GroupChatManager(groupchat=group_chat, llm_config=FULL_LLM_CONFIG)
+group_chat_manager = GroupChatManager(
+    groupchat=group_chat, llm_config=COMMON_LLM_CONFIG
+)
 
 ceo_user_proxy_agent.initiate_chat(
     # recipient=product_owner.as_assistant_agent,

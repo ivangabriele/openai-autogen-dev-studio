@@ -175,6 +175,6 @@ pyrightconfig.json
 ################################################################################
 # Custom
 
-/coding
+/project
 
 /oai_config_list.json

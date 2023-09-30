@@ -1,6 +1,6 @@
 from autogen import config_list_from_json
+import os
 
-import utils
 
 COMMON_LLM_CONFIG = {
     # https://microsoft.github.io/autogen/docs/FAQ#set-your-api-endpoints
@@ -9,111 +9,76 @@ COMMON_LLM_CONFIG = {
         file_location=".",
         filter_dict={
             "model": {
+                # "gpt_35_turbo_16k",
+                # "gpt-3.5-turbo-16k",
                 "gpt-4",
-                # "gpt-35-turbo-16k",
-                # "gpt-35-turbo-16k",
             }
         },
     ),
-    # "seed": 42,
-}
-
-FULL_LLM_CONFIG = COMMON_LLM_CONFIG | {
     "functions": [
-        # {
-        #     "name": "product_owner_ask_software_engineer",
-        #     "description": utils.clean_text(
-        #         """
-        #         Ask Sofware Engineer agent to:
-        #         1. provide its feedback on sofware development goals to achieve,
-        #         2. develop the desired software,
-        #         3. check that the software works as expected.
-        #         """
-        #     ),
-        #     "parameters": {
-        #         "type": "object",
-        #         "properties": {
-        #             "message": {
-        #                 "type": "string",
-        #                 "description": utils.clean_text(
-        #                     """
-        #                     Your message.
-        #                     Make sure your message include enough context.
-        #                     Sofware Engineer agent is only aware of discussions you have with it.
-        #                     """
-        #                 ),
-        #             },
-        #         },
-        #         "required": ["message"],
-        #     },
-        # },
+        {
+            "name": "read_file",
+            "description": "Read content from a file and return it.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "relative_path": {
+                        "type": "string",
+                        "description": "Path of the file, relative to project directory.",
+                    },
+                },
+                "required": ["relative_path"],
+            },
+        },
         {
             "name": "run_shell_script",
-            "description": utils.clean_text(
-                """
-                Run a shell script and return the execution result, including errors if any.
-                """
-            ),
+            "description": "Run a shell script and return the execution result, including errors if any.",
             "parameters": {
                 "type": "object",
                 "properties": {
                     "script": {
                         "type": "string",
-                        "description": utils.clean_text(
-                            """
-                            Valid shell script to execute.
-                            """
-                        ),
+                        "description": "Valid shell script to execute.",
                     },
                 },
                 "required": ["command"],
             },
         },
-        # {
-        #     "name": "software_engineer_ask_ceo",
-        #     "description": utils.clean_text(
-        #         """
-        #         Ask CEO (human user) to run the functions when you need to use them.
-        #         """
-        #     ),
-        #     "parameters": {
-        #         "type": "object",
-        #         "properties": {
-        #             "message": {
-        #                 "type": "string",
-        #                 "description": utils.clean_text(
-        #                     """
-        #                     Your message.
-        #                     """
-        #                 ),
-        #             },
-        #         },
-        #         "required": ["message"],
-        #     },
-        # },
-        # {
-        #     "name": "software_engineer_ask_product_owner",
-        #     "description": utils.clean_text(
-        #         """
-        #         Ask Product Owner to:
-        #         1. get more details when you need them,
-        #         2. check that what you developed works as expected.
-        #         """
-        #     ),
-        #     "parameters": {
-        #         "type": "object",
-        #         "properties": {
-        #             "message": {
-        #                 "type": "string",
-        #                 "description": utils.clean_text(
-        #                     """
-        #                     Your message.
-        #                     """
-        #                 ),
-        #             },
-        #         },
-        #         "required": ["message"],
-        #     },
-        # },
+        {
+            "name": "run_rust_file",
+            "description": "Compile a rust file to `./temp_executable` and execute the binary.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "rust_file_path": {
+                        "type": "string",
+                        "description": "Rust file path.",
+                    },
+                },
+                "required": ["command"],
+            },
+        },
+        {
+            "name": "write_file",
+            "description": "Write content to a file. Create file and/or directories if they don't exist.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "relative_path": {
+                        "type": "string",
+                        "description": "Path of the file, relative to project directory.",
+                    },
+                    "file_source": {
+                        "type": "string",
+                        "description": """Content to write.""",
+                    },
+                },
+                "required": ["file_source", "relative_path"],
+            },
+        },
     ],
+    # "seed": 42,
 }
+
+PROJECT_DIRECTORY_NAME = "project"
+PROJECT_DIRECTORY_PATH = os.path.join(os.getcwd(), PROJECT_DIRECTORY_NAME)
