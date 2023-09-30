@@ -1,6 +1,6 @@
 # OpenAI Autogen Game Studio
 
-Generate games leveraging OpenAI agents, taking advantage of Microsoft Autogen OpenAI Agent.
+Generate games leveraging OpenAI agents, taking advantage of [Microsoft Autogen](https://github.com/microsoft/autogen).
 
 > ⚠️ **This is a work in progress!**<br>
 > The current code is a giant mess, and more agents are on their way to greatly improve results,
