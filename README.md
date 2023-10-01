@@ -15,7 +15,7 @@ Generate games and programs using OpenAI agents. Built on top of [Microsoft Auto
 You either need an OpenAI API key or an Azure OpenAI API key.
 
 **Do not rely on `GPT-3.5`**, whether `turbo` or standard, for more than just "sample" programs.
-If you're aiming for more complex applications, GPT-4 is a must, preferably GPT-4-32k.
+If you're aiming for more complex applications, `GPT-4` is a must, preferably even `GPT-4-32k`.
 
 Using the OpenAI API might quickly exhaust your token limit.
 For more extensive projects, Azure OpenAI API is recommended.

@@ -22,6 +22,7 @@ mypi = "^0.0.3"
 pytest = "^7.4.2"
 types-beautifulsoup4 = "^4.12.0.6"
 types-requests = "^2.31.0.7"
+pytest-mock = "^3.11.1"
 
 [build-system]
 requires = ["poetry-core"]
