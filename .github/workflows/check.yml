@@ -32,7 +32,7 @@ jobs:
           # mypy --install-types --non-interactive
 
       - name: Check Types
-        run: make test
+        run: make type
 
   test:
     name: Unit Test
