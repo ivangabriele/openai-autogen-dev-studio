@@ -1,7 +1,7 @@
 [tool.poetry]
-name = "openai-autogen-game-studio"
+name = "openai-autogen-development-studio"
 version = "0.1.0"
-description = "Generate games leveraging OpenAI agents, taking advantage of Microsoft Autogen OpenAI Agent."
+description = "Generate games and programs using OpenAI agents. Built upon Microsoft Autogen."
 authors = ["Ivan Gabriele <ivan.gabriele@gmail.com>"]
 license = "MIT"
 readme = "README.md"
@@ -11,10 +11,16 @@ readme = "README.md"
 python = "^3.10"
 pyautogen = { extras = ["mathchat"], version = "^0.1.4" }
 ipython = "^8.16.0"
+termcolor = "^2.3.0"
+beautifulsoup4 = "^4.12.2"
+requests = "^2.31.0"
+jsonc-parser = "^1.1.5"
 
 [tool.poetry.group.dev.dependencies]
 mypi = "^0.0.3"
 pytest = "^7.4.2"
+types-beautifulsoup4 = "^4.12.0.6"
+types-requests = "^2.31.0.7"
 
 [build-system]
 requires = ["poetry-core"]

@@ -27,6 +27,8 @@ class SoftwareEngineer(BaseAgent):
                 The Product Owner agent is your manager.
 
                 Go to the point. Forget social conventions.
+
+                You should ensure the program is working by writing unit and e2e tests.
                 """
             ),
         )

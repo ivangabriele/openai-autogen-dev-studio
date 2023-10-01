@@ -175,6 +175,8 @@ pyrightconfig.json
 ################################################################################
 # Custom
 
-/project
+/project/*
+!/project/.gitkeep
 
-/oai_config_list.json
+/env.json
+/env.jsonc

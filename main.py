@@ -16,7 +16,7 @@ We use OpenAI API in our case.
 from autogen import GroupChat, GroupChatManager, UserProxyAgent
 import actions
 from agents import ProductOwner, SoftwareEngineer
-from constants import COMMON_LLM_CONFIG, PROJECT_DIRECTORY_NAME
+from constants import COMMON_LLM_CONFIG, PROJECT_CONFIG, PROJECT_DIRECTORY_NAME
 import utils
 
 
@@ -26,14 +26,15 @@ import utils
 ceo_user_proxy_agent = UserProxyAgent(
     "CEO",
     code_execution_config={"work_dir": PROJECT_DIRECTORY_NAME},
-    human_input_mode="NEVER",
+    human_input_mode="TERMINATE",
     llm_config=COMMON_LLM_CONFIG,
     # is_termination_msg=lambda x: x.get("content", "").rstrip().endswith("TERMINATE"),
     # max_consecutive_auto_reply=10,
     system_message=utils.clean_text(
         """
             For coding tasks, only use the functions you have been provided with.
-            Always provide the full absolute path of the files you create or edit in your messages.
+
+            If there is an "impossible" issue, ask the Product Manager to find an alternative solution.
 
             Reply TERMINATE if the task has been solved at full satisfaction.
             Otherwise, reply CONTINUE, or the reason why the task is not solved yet.
@@ -80,13 +81,16 @@ group_chat_manager = GroupChatManager(
     groupchat=group_chat, llm_config=COMMON_LLM_CONFIG
 )
 
+utils.print_project_config(PROJECT_CONFIG)
+
+if PROJECT_CONFIG["initial_project_description"] is None:
+    initial_project_description = product_owner.as_assistant_agent.get_human_input(
+        "Product Owner: You didn't specify a project in `env.jsonc`. What do you want us to develop?\n\nCEO: "
+    )
+else:
+    initial_project_description = PROJECT_CONFIG["initial_project_description"]
+
 ceo_user_proxy_agent.initiate_chat(
-    # recipient=product_owner.as_assistant_agent,
     recipient=group_chat_manager,
-    message=utils.clean_text(
-        """
-        Product Owner, quickly develop and run a basic CLI snake game in Node.js.
-        `node` and `npm` are already installed.
-        """,
-    ),
+    message=utils.clean_text(initial_project_description),
 )

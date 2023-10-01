@@ -39,9 +39,10 @@ class ProductOwner(BaseAgent):
 
                 But, before starting any development, ask your Software Engineer to carefully check
                 for installed programs and analyze all the current files source code in the directory
-                to give you a brief. Your Software Engineer should start by running an `ls` command.
+                to give you a brief. Your Software Engineer should start by running an `ls -la` command.
 
-                Don't create a new subdirectory for the program.
+                Reply TERMINATE when you consider the project done or when your team met an issue they can't solve.
+                The CEO can help in some cases.
                 """
             ),
         )

@@ -1,20 +1,16 @@
 from autogen import config_list_from_json
+from jsonc_parser.parser import JsoncParser
 import os
+from typedefs import ProjectConfig
 
+import utils
+
+
+PROJECT_CONFIG: ProjectConfig = JsoncParser.parse_file("./env.jsonc")
 
 COMMON_LLM_CONFIG = {
     # https://microsoft.github.io/autogen/docs/FAQ#set-your-api-endpoints
-    "config_list": config_list_from_json(
-        env_or_file="oai_config_list.json",
-        file_location=".",
-        filter_dict={
-            "model": {
-                # "gpt_35_turbo_16k",
-                # "gpt-3.5-turbo-16k",
-                "gpt-4",
-            }
-        },
-    ),
+    "config_list": [utils.get_model_config_as_dict(PROJECT_CONFIG)],
     "functions": [
         {
             "name": "read_file",
