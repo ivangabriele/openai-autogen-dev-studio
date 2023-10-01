@@ -1,7 +1,7 @@
 [tool.poetry]
-name = "openai-autogen-development-studio"
+name = "openai-autogen-dev-studio"
 version = "0.1.0"
-description = "Generate games and programs using OpenAI agents. Built upon Microsoft Autogen."
+description = "Generate games and programs using OpenAI agents. Built on top of Microsoft Autogen."
 authors = ["Ivan Gabriele <ivan.gabriele@gmail.com>"]
 license = "MIT"
 readme = "README.md"
