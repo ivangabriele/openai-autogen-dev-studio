@@ -18,13 +18,13 @@ COMMON_LLM_CONFIG = {
     "functions": [
         {
             "name": "read_file",
-            "description": "Read content from a file and return it.",
+            "description": "Read and return a file content.",
             "parameters": {
                 "type": "object",
                 "properties": {
                     "relative_path": {
                         "type": "string",
-                        "description": "Path of the file, relative to project directory.",
+                        "description": "Relative path of the file.",
                     },
                 },
                 "required": ["relative_path"],
@@ -32,7 +32,7 @@ COMMON_LLM_CONFIG = {
         },
         {
             "name": "run_bash_command",
-            "description": "Run a bash command and return the output, including errors if any.",
+            "description": "Run a bash command and return the output.",
             "parameters": {
                 "type": "object",
                 "properties": {
@@ -46,7 +46,7 @@ COMMON_LLM_CONFIG = {
         },
         {
             "name": "run_rust_file",
-            "description": "Compile a rust file to `./temp_executable` and execute the binary.",
+            "description": "Compile a rust file into `./temp_executable` and execute it.",
             "parameters": {
                 "type": "object",
                 "properties": {
@@ -60,13 +60,13 @@ COMMON_LLM_CONFIG = {
         },
         {
             "name": "write_file",
-            "description": "Write content to a file. Create file and/or directories if they don't exist.",
+            "description": "Write content to a file, creating it if necessary.",
             "parameters": {
                 "type": "object",
                 "properties": {
                     "relative_path": {
                         "type": "string",
-                        "description": "Path of the file, relative to project directory.",
+                        "description": "Relative path of the file.",
                     },
                     "file_source": {
                         "type": "string",

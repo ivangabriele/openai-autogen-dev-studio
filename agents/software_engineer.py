@@ -27,9 +27,6 @@ class SoftwareEngineer(BaseAgent):
                 The Product Owner agent is your manager.
 
                 Go to the point. Forget social conventions.
-
-                For coding tasks, only use the functions you have been provided with.
-                Regularly clean useless files.
                 """
             ),
         )

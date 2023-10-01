@@ -37,8 +37,11 @@ class ProductOwner(BaseAgent):
 
                 Go to the point. Forget social conventions.
 
-                Ask your Software Engineer to check for existing installed programs and current code base
-                in case there is already a similar work in progress, helping save time on development.
+                But, before starting any development, ask your Software Engineer to carefully check
+                for installed programs and analyze all the current files source code in the directory
+                to give you a brief. Your Software Engineer should start by running an `ls` command.
+
+                Don't create a new subdirectory for the program.
                 """
             ),
         )
