@@ -29,7 +29,7 @@ jobs:
       - name: Setup Types
         run: |
           cp ./env.sample.jsonc ./env.jsonc
-          # mypy --install-types --non-interactive
+          mypy --install-types --non-interactive
 
       - name: Check Types
         run: make type
