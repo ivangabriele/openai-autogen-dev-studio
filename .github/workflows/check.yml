@@ -26,8 +26,10 @@ jobs:
       - name: Install dependencies
         run: poetry install
 
-      # - name: Setup Types
-      #   run: mypy --install-types --non-interactive
+      - name: Setup Types
+        run: |
+          cp ./env.sample.jsonc ./env.jsonc
+          # mypy --install-types --non-interactive
 
       - name: Check Types
         run: make test
