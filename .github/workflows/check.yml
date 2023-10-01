@@ -23,5 +23,8 @@ jobs:
       - name: Install dependencies
         run: poetry install
 
-      - name: Run tests
+      - name: Setup Unit Tests
+        run: cp ./env.sample.jsonc ./env.jsonc
+
+      - name: Run Unit Tests
         run: make test
