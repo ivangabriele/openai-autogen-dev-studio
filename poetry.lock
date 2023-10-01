@@ -893,13 +893,13 @@ tests = ["pytest"]
 
 [[package]]
 name = "pyautogen"
-version = "0.1.4"
+version = "0.1.5"
 description = "Enabling Next-Gen LLM Applications via Multi-Agent Conversation Framework"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "pyautogen-0.1.4-py3-none-any.whl", hash = "sha256:639415131d6f4f85062989589eeeac3159c373c2c4cc80e1ad0d7741eb52eae3"},
-    {file = "pyautogen-0.1.4.tar.gz", hash = "sha256:f011aa29061d7a4caa6d9f3a6fa6f50cc6ac1dc72094f3e37dbc74e5ca64f43e"},
+    {file = "pyautogen-0.1.5-py3-none-any.whl", hash = "sha256:d1899025ab8cc5ed7c6c31633c2d17daf86745f0b586c2b55e9e4661f8d8da58"},
+    {file = "pyautogen-0.1.5.tar.gz", hash = "sha256:094b1669a386169c032961e5e47c907fde1284aebf4898e90a47a07b3e1f9215"},
 ]
 
 [package.dependencies]
@@ -914,7 +914,7 @@ wolframalpha = {version = "*", optional = true, markers = "extra == \"mathchat\"
 [package.extras]
 blendsearch = ["flaml[blendsearch]"]
 mathchat = ["pydantic (==1.10.9)", "sympy", "wolframalpha"]
-retrievechat = ["chromadb", "sentence-transformers", "tiktoken"]
+retrievechat = ["chromadb", "pypdf", "sentence-transformers", "tiktoken"]
 test = ["coverage (>=5.3)", "datasets", "ipykernel", "nbconvert", "nbformat", "pre-commit", "pydantic (==1.10.9)", "pytest (>=6.1.1)", "sympy", "wolframalpha"]
 
 [[package]]

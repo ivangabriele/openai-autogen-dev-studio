@@ -1,15 +1,13 @@
-from typing import TYPE_CHECKING
-from autogen import AssistantAgent
-from actions import run_bash_command
-from agents.base_agent import BaseAgent
+import autogen
 
+import agents
 from constants import COMMON_LLM_CONFIG
 from utils import clean_text
 
 
-class SoftwareEngineer(BaseAgent):
+class SoftwareEngineer(agents.BaseAgent):
     def __init__(self) -> None:
-        self.as_assistant_agent = AssistantAgent(
+        self.as_assistant_agent = autogen.AssistantAgent(
             "Sofware_Engineer",
             llm_config=COMMON_LLM_CONFIG,
             system_message=clean_text(

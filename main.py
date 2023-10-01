@@ -13,7 +13,7 @@ They can operate in various modes that employ combinations of LLMs, human inputs
 We use OpenAI API in our case.
 """
 
-from autogen import GroupChat, GroupChatManager, UserProxyAgent
+import autogen
 
 import actions
 import agents
@@ -24,7 +24,7 @@ import utils
 # CEO Human Proxy Agent
 # Uses shell with human-in-the-loop, meaning the human user can either give their input when asked,
 # or ignore step, to let the agent interactions continue from there.
-ceo_user_proxy_agent = UserProxyAgent(
+ceo_user_proxy_agent = autogen.UserProxyAgent(
     "CEO",
     code_execution_config={"work_dir": PROJECT_DIRECTORY_NAME},
     human_input_mode="TERMINATE",
@@ -75,7 +75,7 @@ user_experience_designer.as_assistant_agent.register_function(
     function_map=COMMON_FUNCTION_MAP,
 )
 
-group_chat = GroupChat(
+group_chat = autogen.GroupChat(
     admin_name="Administrator",
     agents=[
         ceo_user_proxy_agent,
@@ -88,7 +88,7 @@ group_chat = GroupChat(
     max_round=100,
 )
 
-group_chat_manager = GroupChatManager(
+group_chat_manager = autogen.GroupChatManager(
     groupchat=group_chat, llm_config=COMMON_LLM_CONFIG
 )
 

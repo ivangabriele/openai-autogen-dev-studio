@@ -1,13 +1,13 @@
-from autogen import AssistantAgent
-from agents.base_agent import BaseAgent
-from constants import COMMON_LLM_CONFIG
+import autogen
 
+import agents
+from constants import COMMON_LLM_CONFIG
 from utils import clean_text
 
 
-class QualityAnalyst(BaseAgent):
+class QualityAnalyst(agents.BaseAgent):
     def __init__(self) -> None:
-        self.as_assistant_agent = AssistantAgent(
+        self.as_assistant_agent = autogen.AssistantAgent(
             "Quality_Analyst",
             llm_config=COMMON_LLM_CONFIG,
             system_message=clean_text(
