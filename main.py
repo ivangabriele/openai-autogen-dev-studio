@@ -14,8 +14,9 @@ We use OpenAI API in our case.
 """
 
 from autogen import GroupChat, GroupChatManager, UserProxyAgent
+
 import actions
-from agents import ProductOwner, SoftwareEngineer
+import agents
 from constants import COMMON_LLM_CONFIG, PROJECT_CONFIG, PROJECT_DIRECTORY_NAME
 import utils
 
@@ -32,37 +33,45 @@ ceo_user_proxy_agent = UserProxyAgent(
     # max_consecutive_auto_reply=10,
     system_message=utils.clean_text(
         """
-            For coding tasks, only use the functions you have been provided with.
-
             If there is an "impossible" issue, ask the Product Manager to find an alternative solution.
 
-            Reply TERMINATE if the task has been solved at full satisfaction.
-            Otherwise, reply CONTINUE, or the reason why the task is not solved yet.
+            Reply TERMINATE if either the task has been solved at full satisfaction or if the team is stuck.
+            Otherwise, reply CONTINUE.
         """
     ),
 )
 
-product_owner = ProductOwner()
-software_engineer = SoftwareEngineer()
-
-product_owner.attach_agents(software_engineer=software_engineer)
-software_engineer.attach_agents(product_owner=product_owner)
-
 
 COMMON_FUNCTION_MAP = {
+    "fetch_web_page": actions.fetch_web_page,
     "read_file": actions.read_file,
     "run_bash_command": actions.run_bash_command,
     "run_rust_file": actions.run_rust_file,
+    "search_web": actions.search_web,
     "write_file": actions.write_file,
 }
 
 ceo_user_proxy_agent.register_function(
     function_map=COMMON_FUNCTION_MAP,
 )
+
+product_owner = agents.ProductOwner()
 product_owner.as_assistant_agent.register_function(
     function_map=COMMON_FUNCTION_MAP,
 )
+
+quality_analyst = agents.QualityAnalyst()
+quality_analyst.as_assistant_agent.register_function(
+    function_map=COMMON_FUNCTION_MAP,
+)
+
+software_engineer = agents.SoftwareEngineer()
 software_engineer.as_assistant_agent.register_function(
+    function_map=COMMON_FUNCTION_MAP,
+)
+
+user_experience_designer = agents.UserExperienceDesigner()
+user_experience_designer.as_assistant_agent.register_function(
     function_map=COMMON_FUNCTION_MAP,
 )
 
@@ -71,7 +80,9 @@ group_chat = GroupChat(
     agents=[
         ceo_user_proxy_agent,
         product_owner.as_assistant_agent,
+        quality_analyst.as_assistant_agent,
         software_engineer.as_assistant_agent,
+        user_experience_designer.as_assistant_agent,
     ],
     messages=[],
     max_round=100,

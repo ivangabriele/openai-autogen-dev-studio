@@ -13,6 +13,20 @@ COMMON_LLM_CONFIG = {
     "config_list": [utils.get_model_config_as_dict(PROJECT_CONFIG)],
     "functions": [
         {
+            "name": "fetch_web_page",
+            "description": "Fetch a web page and return its content as text and Markdown links.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "url": {
+                        "type": "string",
+                        "description": "Url to fetch from.",
+                    },
+                },
+                "required": ["url"],
+            },
+        },
+        {
             "name": "read_file",
             "description": "Read and return a file content.",
             "parameters": {
@@ -52,6 +66,20 @@ COMMON_LLM_CONFIG = {
                     },
                 },
                 "required": ["rust_file_path"],
+            },
+        },
+        {
+            "name": "search_web",
+            "description": "Search for a text query using Brave search engine and return results as JSON.",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "query": {
+                        "type": "string",
+                        "description": "Query to search.",
+                    },
+                },
+                "required": ["query"],
             },
         },
         {

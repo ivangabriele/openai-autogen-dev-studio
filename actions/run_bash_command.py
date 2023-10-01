@@ -1,4 +1,5 @@
-import subprocess
+import os
+import pty
 
 from constants import PROJECT_DIRECTORY_PATH
 import utils
@@ -7,19 +8,29 @@ import utils
 def run_bash_command(command: str) -> str:
     utils.debug("Command", command)
     utils.debug("In", PROJECT_DIRECTORY_PATH)
-    result = subprocess.run(
-        command,
-        cwd=PROJECT_DIRECTORY_PATH,
-        shell=True,
-        stderr=subprocess.PIPE,
-        stdout=subprocess.PIPE,
-    )
 
-    output: str
-    if result.returncode == 0:
-        output = f"{result.stdout.decode('utf-8')}{result.stderr.decode('utf-8')}"
+    def reader(fd):
+        output = b""
+        while True:
+            try:
+                data = os.read(fd, 1024)
+                if not data:
+                    break
+                output += data
+            except OSError:
+                break
+        return output.decode("utf-8")
+
+    pid, fd = pty.fork()
+    if pid == 0:
+        os.chdir(PROJECT_DIRECTORY_PATH)
+        os.execlp("bash", "bash", "-c", command)
     else:
-        output = f"[ERROR] {result.stderr.decode('utf-8')}"
+        output = reader(fd)
+        _, ret_code = os.wait()
+        if ret_code != 0:
+            utils.debug("Error", f"Command failed with return code {ret_code}", True)
+            output = f"[ERROR] Command failed with return code {ret_code}\n{output}"
 
-    utils.debug("Output", output, True)
-    return output
+        utils.debug("Output", output, True)
+        return output

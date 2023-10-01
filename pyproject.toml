@@ -15,6 +15,7 @@ termcolor = "^2.3.0"
 beautifulsoup4 = "^4.12.2"
 requests = "^2.31.0"
 jsonc-parser = "^1.1.5"
+dacite = "^1.8.1"
 
 [tool.poetry.group.dev.dependencies]
 mypi = "^0.0.3"

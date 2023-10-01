@@ -1,10 +1,38 @@
+from typing import Union
+from dacite import from_dict
+import json
 import requests
-from typing import Dict
+
+from actions.search_web_types import WebSearchApiResponse
 
 from constants import PROJECT_CONFIG
 
 
-def search_web(query: str) -> Dict:
+def search_web(query: str) -> str:
+    brave_search_api_result_or_error = _fetch_brave_search_api(query)
+
+    # If it's an `str`, that means it's an error
+    if isinstance(brave_search_api_result_or_error, str):
+        return brave_search_api_result_or_error
+    else:
+        brave_search_api_result = brave_search_api_result_or_error
+
+    # Simplify the data
+    simplified_response_data = {
+        "search_results": [
+            {
+                "title": result.title,
+                "description": result.description,
+                "url": result.url,
+            }
+            for result in brave_search_api_result.web.results
+        ]
+    }
+
+    return json.dumps(simplified_response_data)
+
+
+def _fetch_brave_search_api(query: str) -> Union[WebSearchApiResponse, str]:
     endpoint = "https://api.search.brave.com/res/v1/web/search"
 
     headers = {
@@ -35,4 +63,12 @@ def search_web(query: str) -> Dict:
     }
 
     response = requests.get(endpoint, headers=headers, params=params)
-    return response.json()
+    WebSearchApiResponse
+
+    if response.status_code != 200:
+        return f"Error: {response.status_code} - {response.reason}"
+
+    response_dict = json.loads(response.text)
+    response_data = from_dict(data_class=WebSearchApiResponse, data=response_dict)
+
+    return response_data
