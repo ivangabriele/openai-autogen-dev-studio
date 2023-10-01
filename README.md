@@ -23,8 +23,9 @@ For more extensive projects, Azure OpenAI API is recommended.
 **Be mindful of costs** if you have ambitious goals! Always monitor tokens usage and what your agents are doing.
 While AI can be a powerful tool, it isn't necessarily cheaper than hiring real developers — yet 🙄.
 
-
 ### Anaconda
+
+#### 1/3 Installation
 
 ```sh
 conda create -n autogen python=3.10
@@ -33,13 +34,38 @@ pip install poetry
 poetry install
 cp env.sample.jsonc env.jsonc
 ```
+#### 2/3 Mandatory Autogen Fixes
 
-1. You MUST copy (locally) [this tiny PR fix](https://github.com/microsoft/autogen/pull/47) to get the code to work.
-   This won't be necessary once the PR is merged.
-2. Edit both `env.json` and `constants.py` with your OpenAI API or Azure OpenAI API configuration.
-3. Edit the end of `main.py` to customize your first instruction.
+First edit your local installed `autogen` to apply [this tiny PR fix](https://github.com/microsoft/autogen/pull/47)
 
-Then you can run it via:
+Then, in the same file (`agentchat/conversable_agent.py`), edit `generate_oai_reply()` method like that:
+
+```diff
+    def generate_oai_reply(
+        self,
+        messages: Optional[List[Dict]] = None,
+        sender: Optional[Agent] = None,
+        config: Optional[Any] = None,
+    ) -> Tuple[bool, Union[str, Dict, None]]:
+        """Generate a reply using autogen.oai."""
+        llm_config = self.llm_config if config is None else config
+        if llm_config is False:
+            return False, None
+        if messages is None:
+            messages = self._oai_messages[sender]
++       else:
++           for message in messages:
++               message.setdefault('content', "")
+
+```
+
+#### 3/3 Configuration
+
+Edit your `env.json` to add your API keys and customize your installation.
+
+#### Run
+
+Just:
 
 ```sh
 make run
