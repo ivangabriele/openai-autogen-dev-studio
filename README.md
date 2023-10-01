@@ -3,7 +3,7 @@
 Generate games and programs using OpenAI agents. Built on top of [Microsoft Autogen](https://github.com/microsoft/autogen).
 
 > ⚠️ **Work In Progress**  
-> The current code works (yeah!) but:
+> The current code works but:
 > - It needs some cleaning up.
 > - Enhancements can be made with better prompt engineering and the addition of more agents.
 > - Microsoft Autogen is still in its early stages contain a few bugs.
@@ -20,7 +20,7 @@ If you're aiming for more complex applications, GPT-4 is a must, preferably GPT-
 Using the OpenAI API might quickly exhaust your token limit.
 For more extensive projects, Azure OpenAI API is recommended.
 
-Be mindful of costs if you have ambitious goals! Always monitor what your agents are doing.
+**Be mindful of costs** if you have ambitious goals! Always monitor tokens usage and what your agents are doing.
 While AI can be a powerful tool, it isn't necessarily cheaper than hiring real developers — yet 🙄.
 
 
