@@ -18,7 +18,6 @@ jsonc-parser = "^1.1.5"
 dacite = "^1.8.1"
 
 [tool.poetry.group.dev.dependencies]
-mypi = "^0.0.3"
 pytest = "^7.4.2"
 types-beautifulsoup4 = "^4.12.0.6"
 types-requests = "^2.31.0.7"
