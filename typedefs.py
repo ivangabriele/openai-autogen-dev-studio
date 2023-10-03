@@ -1,7 +1,9 @@
-from typing import List, Optional, TypedDict
+from dataclasses import dataclass
+from typing import List, Optional
 
 
-class ModelConfig(TypedDict):
+@dataclass
+class ModelConfig:
     model: str
     api_key: str
     api_base: Optional[str]
@@ -9,7 +11,8 @@ class ModelConfig(TypedDict):
     api_version: Optional[str]
 
 
-class ProjectConfig(TypedDict):
+@dataclass
+class ProjectConfig:
     brave_search_api_key: str
     current_model: str
     initial_project_description: Optional[str]

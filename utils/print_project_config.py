@@ -1,3 +1,4 @@
+import dataclasses
 from typing import SupportsIndex
 from termcolor import colored
 from typedefs import ProjectConfig
@@ -5,14 +6,16 @@ import utils
 
 
 def print_project_config(project_config: ProjectConfig):
+    project_config_as_dict = dataclasses.asdict(project_config)
+
     print()
     _print_separator()
     print(colored("OADS Configuration", "yellow"))
     print()
 
-    current_model = project_config["current_model"]
+    current_model = project_config_as_dict["current_model"]
 
-    for key, value in project_config.items():
+    for key, value in project_config_as_dict.items():
         if key == "models" and isinstance(value, list):
             print("models:")
             for model_config in value:

@@ -1,4 +1,5 @@
 from autogen import config_list_from_json
+from dacite import from_dict
 from jsonc_parser.parser import JsoncParser
 import os
 from typedefs import ProjectConfig
@@ -6,7 +7,10 @@ from typedefs import ProjectConfig
 import utils
 
 
-PROJECT_CONFIG: ProjectConfig = JsoncParser.parse_file("./env.jsonc")
+PROJECT_CONFIG_AS_DICT = JsoncParser.parse_file("./env.jsonc")
+PROJECT_CONFIG: ProjectConfig = from_dict(
+    data_class=ProjectConfig, data=PROJECT_CONFIG_AS_DICT
+)
 
 COMMON_LLM_CONFIG = {
     # https://microsoft.github.io/autogen/docs/FAQ#set-your-api-endpoints
@@ -101,7 +105,8 @@ COMMON_LLM_CONFIG = {
             },
         },
     ],
-    # "seed": 42,
+    "request_timeout": 600,
+    "seed": 42,
 }
 
 PROJECT_DIRECTORY_NAME = "project"

@@ -33,10 +33,19 @@ ceo_user_proxy_agent = autogen.UserProxyAgent(
     # max_consecutive_auto_reply=10,
     system_message=utils.clean_text(
         """
-            If there is an "impossible" issue, ask the Product Manager to find an alternative solution.
+        You are the CEO.
 
-            Reply TERMINATE if either the task has been solved at full satisfaction or if the team is stuck.
-            Otherwise, reply CONTINUE.
+        You manage a team including a Software Engineer and a User Experience Designer.
+
+        You role is to plan, organize and tell your agents what to do.
+
+        Rules:
+        - Keep it short. Get to the point. Be straightforward. Specify your recipient's name.
+        - Use a `BOARD.json` file to plan and keep track of ALL the steps you and your team makes.
+            ALWAYS check for its content when you start.
+
+        Reply TERMINATE if the task has been solved or the team cannot solve an issue.
+        Otherwise, reply CONTINUE.
         """
     ),
 )
@@ -55,15 +64,7 @@ ceo_user_proxy_agent.register_function(
     function_map=COMMON_FUNCTION_MAP,
 )
 
-product_owner = agents.ProductOwner()
-product_owner.as_assistant_agent.register_function(
-    function_map=COMMON_FUNCTION_MAP,
-)
-
-quality_analyst = agents.QualityAnalyst()
-quality_analyst.as_assistant_agent.register_function(
-    function_map=COMMON_FUNCTION_MAP,
-)
+# product_owner = agents.ProductOwner()
 
 software_engineer = agents.SoftwareEngineer()
 software_engineer.as_assistant_agent.register_function(
@@ -79,8 +80,7 @@ group_chat = autogen.GroupChat(
     admin_name="Administrator",
     agents=[
         ceo_user_proxy_agent,
-        product_owner.as_assistant_agent,
-        quality_analyst.as_assistant_agent,
+        # product_owner.as_assistant_agent,
         software_engineer.as_assistant_agent,
         user_experience_designer.as_assistant_agent,
     ],
@@ -94,12 +94,12 @@ group_chat_manager = autogen.GroupChatManager(
 
 utils.print_project_config(PROJECT_CONFIG)
 
-if PROJECT_CONFIG["initial_project_description"] is None:
-    initial_project_description = product_owner.as_assistant_agent.get_human_input(
-        "Product Owner: You didn't specify a project in `env.jsonc`. What do you want us to develop?\n\nCEO: "
+if PROJECT_CONFIG.initial_project_description is None:
+    initial_project_description = ceo_user_proxy_agent.get_human_input(
+        "You didn't specify a project in `env.jsonc`. What do you want us to develop?\nRequest: "
     )
 else:
-    initial_project_description = PROJECT_CONFIG["initial_project_description"]
+    initial_project_description = PROJECT_CONFIG.initial_project_description
 
 ceo_user_proxy_agent.initiate_chat(
     recipient=group_chat_manager,

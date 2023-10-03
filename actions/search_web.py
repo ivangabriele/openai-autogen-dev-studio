@@ -38,7 +38,7 @@ def _fetch_brave_search_api(query: str) -> Union[WebSearchApiResponse, str]:
     headers = {
         "Accept": "application/json",
         "Accept-Encoding": "gzip",
-        "X-Subscription-Token": PROJECT_CONFIG["brave_search_api_key"],
+        "X-Subscription-Token": PROJECT_CONFIG.brave_search_api_key,
     }
 
     # Commentted values represent the default value
@@ -63,7 +63,6 @@ def _fetch_brave_search_api(query: str) -> Union[WebSearchApiResponse, str]:
     }
 
     response = requests.get(endpoint, headers=headers, params=params)
-    WebSearchApiResponse
 
     if response.status_code != 200:
         return f"Error: {response.status_code} - {response.reason}"

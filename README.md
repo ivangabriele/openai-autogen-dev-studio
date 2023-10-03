@@ -4,9 +4,16 @@ Generate games and programs using OpenAI agents. Built on top of [Microsoft Auto
 
 > ⚠️ **Work In Progress**  
 > The current code works but:
-> - It needs some cleaning up.
-> - Enhancements can be made with better prompt engineering and the addition of more agents.
-> - Microsoft Autogen is still in its early stages contain a few bugs.
+> - A lot of thing need to be optimized in order to drastically reduce tokens usage:
+    caching, steps-by-step process, conversation splitting, better prompts.
+> - The code needs some cleaning up.
+> - Microsoft Autogen is still in early stage and contains a few bugs.
+> - A lot of hard-coded stuff could be customizable via config files.
+> - I will only focus on a few programming languages at first.
+
+## Why this project?
+
+There are some amazing projects doing similar things but I hope to find a way to solve ambitious programs generation.
 
 ## Getting Started
 
@@ -34,36 +41,12 @@ pip install poetry
 poetry install
 cp env.sample.jsonc env.jsonc
 ```
-#### 2/3 Mandatory Autogen Fixes
 
-First edit your local installed `autogen` to apply [this tiny PR fix](https://github.com/microsoft/autogen/pull/47)
-
-Then, in the same file (`agentchat/conversable_agent.py`), edit `generate_oai_reply()` method like that:
-
-```diff
-    def generate_oai_reply(
-        self,
-        messages: Optional[List[Dict]] = None,
-        sender: Optional[Agent] = None,
-        config: Optional[Any] = None,
-    ) -> Tuple[bool, Union[str, Dict, None]]:
-        """Generate a reply using autogen.oai."""
-        llm_config = self.llm_config if config is None else config
-        if llm_config is False:
-            return False, None
-        if messages is None:
-            messages = self._oai_messages[sender]
-+       else:
-+           for message in messages:
-+               message.setdefault('content', "")
-
-```
-
-#### 3/3 Configuration
+#### 2/3 Configuration
 
 Edit your `env.json` to add your API keys and customize your installation.
 
-#### Run
+#### 3/3 Run
 
 Just:
 
