@@ -2,6 +2,9 @@ import re
 
 
 def clean_text(text):
-    cleaned_text = re.sub(r"\s+", " ", text).strip()
+    lines = text.split("\n")
+    cleaned_lines = [re.sub(r"\s+", " ", line).strip() for line in lines]
+    cleaned_text = "\n".join(cleaned_lines)
+    cleaned_text = cleaned_text.strip()
 
     return cleaned_text

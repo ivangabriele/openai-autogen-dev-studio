@@ -1,4 +1,3 @@
-import os
 import subprocess
 
 from constants import PROJECT_DIRECTORY_PATH
@@ -24,8 +23,8 @@ def run_rust_file(rust_file_path: str) -> str:
             run_command, cwd=PROJECT_DIRECTORY_PATH, stderr=subprocess.STDOUT
         )
         return output.decode("utf-8")
-    except subprocess.CalledProcessError as e:
-        return f"Error running Rust code: {e.output.decode('utf-8')}"
+    except subprocess.CalledProcessError as error:
+        return f"Error running Rust code: {error.output.decode('utf-8')}"
     finally:
         # Clean up the temporary executable
         subprocess.call(["rm", "temp_executable"])
