@@ -1,14 +1,20 @@
 from dataclasses import dataclass
-from typing import List, Optional
+from typing import Dict, List, Optional
 
 
 @dataclass
 class ModelConfig:
-    model: str
-    api_key: str
     api_base: Optional[str]
+    api_key: str
     api_type: Optional[str]
     api_version: Optional[str]
+    messages: Optional[List[Dict[str, str]]]
+    model: str
+
+
+@dataclass
+class UserAgentConfig:
+    current_model: Optional[str]
 
 
 @dataclass
@@ -17,3 +23,4 @@ class ProjectConfig:
     current_model: str
     initial_project_description: Optional[str]
     models: List[ModelConfig]
+    user_proxy_agent: UserAgentConfig

@@ -1,10 +1,7 @@
 import json
-import pytest
 import requests
 
 import actions
-from actions.search_web_types import WebSearchApiResponse
-from dacite import from_dict
 
 mock_response_data = (
     {

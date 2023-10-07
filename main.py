@@ -16,7 +16,12 @@ import autogen
 import actions
 
 import agents
-from constants import COMMON_LLM_CONFIG, PROJECT_CONFIG, PROJECT_DIRECTORY_NAME
+from constants import (
+    CEO_LLM_CONFIG,
+    COMMON_LLM_CONFIG,
+    PROJECT_CONFIG,
+    PROJECT_DIRECTORY_NAME,
+)
 import utils
 
 
@@ -27,7 +32,7 @@ ceo_user_proxy_agent = autogen.UserProxyAgent(
     "CEO",
     code_execution_config={"work_dir": PROJECT_DIRECTORY_NAME},
     human_input_mode="TERMINATE",
-    llm_config=COMMON_LLM_CONFIG,
+    llm_config=CEO_LLM_CONFIG,
     # is_termination_msg=lambda x: x.get("content", "").rstrip().endswith("TERMINATE"),
     # max_consecutive_auto_reply=10,
     system_message=utils.clean_text(

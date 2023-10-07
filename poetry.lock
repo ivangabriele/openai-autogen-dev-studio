@@ -925,8 +925,10 @@ version = "0.1.6"
 description = "Enabling Next-Gen LLM Applications via Multi-Agent Conversation Framework"
 optional = false
 python-versions = ">=3.8"
-files = []
-develop = false
+files = [
+    {file = "pyautogen-0.1.6-py3-none-any.whl", hash = "sha256:bd4988e6053c019c9b72e9f108386644744bd5471402e9b805ffca9354182402"},
+    {file = "pyautogen-0.1.6.tar.gz", hash = "sha256:af46e1dddb0f4d3c992f572948f956b2408cd247bb71738a81bddbacd6229354"},
+]
 
 [package.dependencies]
 diskcache = "*"
@@ -937,14 +939,8 @@ termcolor = "*"
 [package.extras]
 blendsearch = ["flaml[blendsearch]"]
 mathchat = ["pydantic (==1.10.9)", "sympy", "wolframalpha"]
-retrievechat = ["chromadb", "pypdf", "sentence_transformers", "tiktoken"]
+retrievechat = ["chromadb", "pypdf", "sentence-transformers", "tiktoken"]
 test = ["coverage (>=5.3)", "datasets", "ipykernel", "nbconvert", "nbformat", "pre-commit", "pydantic (==1.10.9)", "pytest (>=6.1.1)", "sympy", "wolframalpha"]
-
-[package.source]
-type = "git"
-url = "https://github.com/microsoft/autogen"
-reference = "HEAD"
-resolved_reference = "39c145dd53d3f631b4b04493daa31e489cb5295d"
 
 [[package]]
 name = "pygments"
@@ -1148,13 +1144,13 @@ telegram = ["requests"]
 
 [[package]]
 name = "traitlets"
-version = "5.11.1"
+version = "5.11.2"
 description = "Traitlets Python configuration system"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "traitlets-5.11.1-py3-none-any.whl", hash = "sha256:2351372ff87fc912c483d1cb6aa466573d5f44eb4ed9e602c8d0ac012c9daece"},
-    {file = "traitlets-5.11.1.tar.gz", hash = "sha256:813584bb569ac4a098c64ca494e8a3bbfef42e37c36a6132bca554aabd111480"},
+    {file = "traitlets-5.11.2-py3-none-any.whl", hash = "sha256:98277f247f18b2c5cabaf4af369187754f4fb0e85911d473f72329db8a7f4fae"},
+    {file = "traitlets-5.11.2.tar.gz", hash = "sha256:7564b5bf8d38c40fa45498072bf4dc5e8346eb087bbf1e2ae2d8774f6a0f078e"},
 ]
 
 [package.extras]
@@ -1188,13 +1184,13 @@ files = [
 
 [[package]]
 name = "types-requests"
-version = "2.31.0.7"
+version = "2.31.0.8"
 description = "Typing stubs for requests"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "types-requests-2.31.0.7.tar.gz", hash = "sha256:4d930dcabbc2452e3d70728e581ac4ac8c2d13f62509ad9114673f542af8cb4e"},
-    {file = "types_requests-2.31.0.7-py3-none-any.whl", hash = "sha256:39844effefca88f4f824dcdc4127b813d3b86a56b2248d3d1afa58832040d979"},
+    {file = "types-requests-2.31.0.8.tar.gz", hash = "sha256:e1b325c687b3494a2f528ab06e411d7092cc546cc9245c000bacc2fca5ae96d4"},
+    {file = "types_requests-2.31.0.8-py3-none-any.whl", hash = "sha256:39894cbca3fb3d032ed8bdd02275b4273471aa5668564617cc1734b0a65ffdf8"},
 ]
 
 [package.dependencies]
@@ -1329,4 +1325,4 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "e3f2e0bc03e9c0c0019fad8d1e5bd5ec20780d03f1a7d2be9285b2cca577160e"
+content-hash = "e6499917aaf280684f27c9fb009c700e40cdbe792e75f6e40ba69fea189fc64e"
