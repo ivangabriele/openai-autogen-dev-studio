@@ -1,0 +1,6 @@
+[FORMAT]
+max-line-length=120
+
+[MESSAGES CONTROL]
+; TODO Re-enable these checks before releasing the first version.
+disable=C0301,C0114,C0115,C0116
