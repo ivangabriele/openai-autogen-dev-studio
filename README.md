@@ -4,6 +4,9 @@ Generate games and programs using OpenAI agents. Built on top of [Microsoft Auto
 
 > ⚠️ **Work In Progress**  
 > The current code works but:
+> - **THERE ARE, AND THERE WILL BE, BREAKING CHANGES:**
+>   - Always check that your hidden `.env.jsonc` file match the last `env.sample.jsonc` structure.
+>   - Always update your dependencies via `poetry install`.
 > - A lot of thing need to be optimized in order to drastically reduce tokens usage:
     caching, steps-by-step process, conversation splitting, better prompts.
 > - The code needs some cleaning up.

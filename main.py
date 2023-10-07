@@ -62,23 +62,33 @@ ceo_user_proxy_agent.register_function(
     function_map=COMMON_FUNCTION_MAP,
 )
 
-# product_owner = agents.ProductOwner()
+
+functioneer = agents.Functioneer()
+# functioneer.as_assistant_agent.register_function(
+#     function_map=COMMON_FUNCTION_MAP,
+# )
+
+product_owner = agents.ProductOwner()
+# product_owner.as_assistant_agent.register_function(
+#     function_map=COMMON_FUNCTION_MAP,
+# )
 
 software_engineer = agents.SoftwareEngineer()
-software_engineer.as_assistant_agent.register_function(
-    function_map=COMMON_FUNCTION_MAP,
-)
+# software_engineer.as_assistant_agent.register_function(
+#     function_map=COMMON_FUNCTION_MAP,
+# )
 
 user_experience_designer = agents.UserExperienceDesigner()
-user_experience_designer.as_assistant_agent.register_function(
-    function_map=COMMON_FUNCTION_MAP,
-)
+# user_experience_designer.as_assistant_agent.register_function(
+#     function_map=COMMON_FUNCTION_MAP,
+# )
 
 group_chat = autogen.GroupChat(
     admin_name="Administrator",
     agents=[
         ceo_user_proxy_agent,
-        # product_owner.as_assistant_agent,
+        functioneer.as_assistant_agent,
+        product_owner.as_assistant_agent,
         software_engineer.as_assistant_agent,
         user_experience_designer.as_assistant_agent,
     ],
