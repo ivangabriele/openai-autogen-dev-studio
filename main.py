@@ -2,20 +2,19 @@
 Module Name: main.py
 
 Short Description:
-This program intend to leverage Microsoft Autogen in order to automate software development via AI agents.
+This program intends to leverage Microsoft Autogen to automate software development via AI agents.
 
 Detailed Description:
-Microsoft Autogen is a framework that enables development of LLM applications
-using multiple agents that can converse with each other to solve task.
-AutoGen agents are customizable, conversable, and seamlessly allow human participation.
-They can operate in various modes that employ combinations of LLMs, human inputs, and tools.
-
-We use OpenAI API in our case.
+Microsoft Autogen is a framework that enables the development of LLM (Lifelong Learning Machines) applications
+using multiple agents capable of conversing with each other to solve tasks.
+Autogen agents are customizable, conversable, and can seamlessly incorporate human participation.
+These agents can operate in various modes, utilizing combinations of LLMs, human input, and other tools.
 """
 
 import autogen
 
 import actions
+
 import agents
 from constants import COMMON_LLM_CONFIG, PROJECT_CONFIG, PROJECT_DIRECTORY_NAME
 import utils
@@ -35,16 +34,15 @@ ceo_user_proxy_agent = autogen.UserProxyAgent(
         """
         You are the CEO.
 
-        You manage a team including a Software Engineer and a User Experience Designer.
-
-        You role is to plan, organize and tell your agents what to do.
+        You are assisted by a Product Owner who will try his best to achieve your goals with the team under his orders.
+        Your are the only agent allowed to run functions.
 
         Rules:
-        - Keep it short. Get to the point. Be straightforward. Specify your recipient's name.
-        - Use a `BOARD.json` file to plan and keep track of ALL the steps you and your team makes.
-            ALWAYS check for its content when you start.
+        - Keep it short. Get to the point. Be straightforward. Always specify your recipient's name.
+        - Only reply to messages prefixed with your name, i.e.: "CEO, etc".
+        - Only communicate with the Product Owner, and nobody else.
 
-        Reply TERMINATE if the task has been solved or the team cannot solve an issue.
+        Reply TERMINATE when the task has been solved to full satisfaction.
         Otherwise, reply CONTINUE.
         """
     ),
@@ -103,5 +101,7 @@ else:
 
 ceo_user_proxy_agent.initiate_chat(
     recipient=group_chat_manager,
-    message=utils.clean_text(initial_project_description),
+    message=utils.clean_text(
+        f"Product Owner, I want your team to achieve these goals:\n- {initial_project_description}"
+    ),
 )
