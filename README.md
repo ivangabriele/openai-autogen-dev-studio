@@ -14,6 +14,21 @@ Generate games and programs using OpenAI agents. Built on top of [Microsoft Auto
 > - A lot of hard-coded stuff could be customizable via config files.
 > - I will only focus on a few programming languages at first.
 
+---
+
+- [Why this project?](#why-this-project)
+- [Getting Started](#getting-started)
+  - [Pre-requisites](#pre-requisites)
+  - [Anaconda](#anaconda)
+    - [1/3 Installation](#13-installation)
+    - [2/3 Configuration](#23-configuration)
+    - [3/3 Run](#33-run)
+- [Open Source LLMs](#open-source-llms)
+  - [1/2 Run Text generation web UI](#12-run-text-generation-web-ui)
+  - [2/2 Setup OADS](#22-setup-oads)
+
+---
+
 ## Why this project?
 
 There are some amazing projects doing similar things but I hope to find a way to solve ambitious programs generation.
@@ -63,4 +78,42 @@ You can clean it via:
 
 ```sh
 make clean
+```
+
+## Open Source LLMs
+
+**IMPORTANT: Functions will NOT work.**
+
+### 1/2 Run Text generation web UI
+
+From what I tested, Autogen seems to work with any Open Source LLM
+supported by [Text generation web UI](https://github.com/oobabooga/text-generation-webui#text-generation-web-ui).
+
+You just have to enable `openai` extension in "Session" tab of the web UI:
+
+![Text generation web UI screenshot](/docs/images/tgwui-screenshot.png)
+
+Be sure to have your `5001` port open or binded if it's a remote server
+since this is where the OpenAI-like API will be exposed.
+
+I personally deploy my current models on [RunPod](https://www.runpod.io) (not affiliated)
+and use `thebloke/cuda11.8.0-ubuntu22.04-oneclick:latest` image
+even though I think it seems a bit outdated regarding llama.cpp & co.
+
+### 2/2 Setup OADS
+
+```jsonc
+  "models": [
+    // Custom deployment of (for example) `Open-Orca/Mistral-7B-OpenOrca`
+    // using "Text generation web UI" with `OpenAI` extension enabled:
+    // https://github.com/oobabooga/text-generation-webui/tree/main/extensions/openai#an-openedai-api-openai-like
+    // This can be any inference endpoint compatible following OpenAI API specs,
+    // regardless of the model you use behind it.
+    {
+      "model": "Open-Orca/LlongOrca-13B-16k",
+      "api_base": "http://localhost:5001", // Or your remote server URL
+      "api_key": "sk-111111111111111111111111111111111111111111111111",
+      "api_type": "open_ai"
+    }
+  ],
 ```
