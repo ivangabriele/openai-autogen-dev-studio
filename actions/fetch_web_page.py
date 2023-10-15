@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup, NavigableString, Tag
 
 def fetch_web_page(url: str) -> str:
     try:
-        response = requests.get(url)
+        response = requests.get(url, timeout=60)
 
         if response.status_code != 200:
             return (
