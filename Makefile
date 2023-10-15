@@ -7,7 +7,7 @@ install:
 	poetry install
 
 lint:
-	poetry run pylint ./main.py
+	poetry run pylint $(shell find . -name '*.py')
 
 run:
 	poetry run python ./main.py
