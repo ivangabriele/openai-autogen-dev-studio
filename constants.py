@@ -1,7 +1,6 @@
-from autogen import config_list_from_json
+import os
 from dacite import from_dict
 from jsonc_parser.parser import JsoncParser
-import os
 from typedefs import ProjectConfig
 
 import utils
@@ -15,6 +14,11 @@ PROJECT_CONFIG: ProjectConfig = from_dict(
 COMMON_LLM_CONFIG = {
     # https://microsoft.github.io/autogen/docs/FAQ#set-your-api-endpoints
     "config_list": [utils.get_model_config_as_dict(PROJECT_CONFIG)],
+    "request_timeout": 600,
+    # "seed": 42,
+}
+
+FUNCTIONAL_LLM_CONFIG = COMMON_LLM_CONFIG | {
     "functions": [
         {
             "name": "fetch_web_page",
@@ -105,8 +109,6 @@ COMMON_LLM_CONFIG = {
             },
         },
     ],
-    "request_timeout": 600,
-    "seed": 42,
 }
 
 PROJECT_DIRECTORY_NAME = "project"

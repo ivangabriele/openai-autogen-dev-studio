@@ -69,7 +69,7 @@ Edit your `env.json` to add your API keys and customize your installation.
 Just:
 
 ```sh
-make run
+make run # or poetry run python main.py
 ```
 
 OADS will automatically generate the program source code in `./project` directory.

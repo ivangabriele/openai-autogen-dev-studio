@@ -13,7 +13,7 @@ These agents can operate in various modes, utilizing combinations of LLMs, human
 
 import autogen
 
-import actions
+# import actions
 
 import agents
 from constants import COMMON_LLM_CONFIG, PROJECT_CONFIG, PROJECT_DIRECTORY_NAME
@@ -49,18 +49,18 @@ ceo_user_proxy_agent = autogen.UserProxyAgent(
 )
 
 
-COMMON_FUNCTION_MAP = {
-    "fetch_web_page": actions.fetch_web_page,
-    "read_file": actions.read_file,
-    "run_bash_command": actions.run_bash_command,
-    "run_rust_file": actions.run_rust_file,
-    "search_web": actions.search_web,
-    "write_file": actions.write_file,
-}
+# COMMON_FUNCTION_MAP = {
+#     "fetch_web_page": actions.fetch_web_page,
+#     "read_file": actions.read_file,
+#     "run_bash_command": actions.run_bash_command,
+#     "run_rust_file": actions.run_rust_file,
+#     "search_web": actions.search_web,
+#     "write_file": actions.write_file,
+# }
 
-ceo_user_proxy_agent.register_function(
-    function_map=COMMON_FUNCTION_MAP,
-)
+# ceo_user_proxy_agent.register_function(
+#     function_map=COMMON_FUNCTION_MAP,
+# )
 
 
 functioneer = agents.Functioneer()
