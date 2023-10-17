@@ -38,7 +38,9 @@ def _print_model_config(model_config: dict, is_selected: bool):
 
     for model_key, model_value in model_config.items():
         formatted_value = (
-            utils.mask_secret(model_value) if model_key in ["api_key"] else model_value
+            utils.mask_secret(model_value)
+            if model_key in ["api_base", "api_key"]
+            else model_value
         )
         print(
             colored(
