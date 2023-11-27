@@ -1,34 +1,40 @@
-import autogen
-
-import agents
-from constants import COMMON_LLM_CONFIG
+import actions
+from constants import FUNCTIONEER_LLM_CONFIG
+from libs.functionary import FunctionaryAssistantAgent
 from utils import clean_text
 
 
-class Functioneer(agents.BaseAgent):
+class Functioneer:
+    as_assistant_agent: FunctionaryAssistantAgent
+
     def __init__(self) -> None:
-        self.as_assistant_agent = autogen.AssistantAgent(
+        self.as_assistant_agent = FunctionaryAssistantAgent(
             "Functioneer",
-            llm_config=COMMON_LLM_CONFIG,
+            llm_config=FUNCTIONEER_LLM_CONFIG,
             system_message=clean_text(
                 """
                 You are the Functioneer.
 
-                You are part of a company including a CEO, a Product Owner, a Software Engineer
-                and a User Experience Designer.
+                Your role is to assist other agents by calling and using your functions for them.
+                Only call and use the functions you are provided with.
+                Do not answer to the agents' questions, only call and use your functions.
 
-                You role is to assist other agents, by suggesting function calls to the CEO, when they ask you to:
-                - Compile and run a Rust file.
-                - Get a web page content by it URL.
-                - Read a project file.
-                - Run a bash command in the project directory.
-                - Search the web.
-                - Write a project file.
-
-                Rules:
-                - Keep it short. Get to the point. Be straightforward. Always specify your recipient's name.
-                - Only reply to messages prefixed with your name, i.e.: "Functioneer, etc".
-                - Ask the CEO to run functions when you need to use them. You are not allowed to run them yourself.
+                You are able to:
+                - read a file by calling the `read_file` function,
+                - read a web page by calling the `fetch_web_page` function,
+                - search the web using a seach engine by callin the `search_web` function,
+                - write a file by calling the `write_file` function.
                 """
             ),
+        )
+        self.as_assistant_agent.clear_history()
+
+        self.as_assistant_agent.register_function(
+            {
+                "fetch_web_page": actions.fetch_web_page,
+                "read_file": actions.read_file,
+                "run_bash_command": actions.run_bash_command,
+                "search_web": actions.search_web,
+                "write_file": actions.write_file,
+            }
         )

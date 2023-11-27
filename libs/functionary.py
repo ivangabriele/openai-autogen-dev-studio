@@ -34,8 +34,6 @@ class FunctionaryUserProxyAgent(autogen.UserProxyAgent):
 def normalize_message(message_as_str: str | Union[Dict, str]) -> Union[Dict, str]:
     """Clean Functionary API message to fit Autogen expectations."""
 
-    print(message_as_str)
-
     # pylint: disable=protected-access
     message = autogen.ConversableAgent._message_to_dict(message_as_str)
 
@@ -75,7 +73,5 @@ def normalize_message(message_as_str: str | Union[Dict, str]) -> Union[Dict, str
             transformed_message = {"content": "TERMINATE"}
         else:
             transformed_message = {"content": content}
-
-    print(transformed_message)
 
     return transformed_message

@@ -2,7 +2,7 @@ import dataclasses
 from typing import SupportsIndex
 from termcolor import colored
 from typedefs import ProjectConfig
-import utils
+from utils.mask_secret import mask_secret
 
 
 def print_project_config(project_config: ProjectConfig):
@@ -38,7 +38,9 @@ def _print_model_config(model_config: dict, is_selected: bool):
 
     for model_key, model_value in model_config.items():
         formatted_value = (
-            utils.mask_secret(model_value) if model_key in ["api_key"] else model_value
+            mask_secret(model_value)
+            if model_key in ["api_base", "api_key"]
+            else model_value
         )
         print(
             colored(
@@ -51,7 +53,7 @@ def _print_model_config(model_config: dict, is_selected: bool):
 
 def _print_key_value(key: str, value: str):
     if key == "brave_search_api_key":
-        print(f"{_pad_key(key, 32)} {utils.mask_secret(value)}")
+        print(f"{_pad_key(key, 32)} {mask_secret(value)}")
     else:
         print(f"{_pad_key(key, 32)} {value}")
 
