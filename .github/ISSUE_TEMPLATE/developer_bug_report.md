@@ -1,0 +1,62 @@
+name: Developer Bug Report
+description: File a bug report as a developer (issues related to the source code).
+title: "[Dev]: "
+labels: ["internal", "bug:report", "action:triage"]
+
+assignees:
+  - ivangabriele
+
+body:
+  - type: markdown
+    attributes:
+      value: Thanks for taking the time to fill out this bug report!
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: Add reproduction steps if you can.
+      value: "1. Ran `make run`\n2. Saw an error\n3. ..."
+    validations:
+      required: true
+  - type: textarea
+    id: what-i-expected
+    attributes:
+      label: What did you expect to happen?
+      value: "I expected ..."
+    validations:
+      required: true
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Did you run the latest version of the code?
+      options:
+        - label: I ran the lastest version of the code on the main branch.
+  - type: dropdown
+    id: os
+    attributes:
+      label: OS
+      description: What operating system are you using?
+      options:
+        - Debian, Ubuntu & derivatives
+        - macOS
+        - Windows
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant log output
+      description: |
+        Please copy and paste any relevant log output.
+        This will be automatically formatted into code, so no need for backticks.
+      render: shell
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Code of Conduct
+      description: |
+        By submitting this issue, you agree to follow this project's
+        [Code of Conduct](https://github.com/ivangabriele/openai-autogen-dev-studio/blob/main/CODE_OF_CONDUCT.md).
+      options:
+        - label: I agree to follow this project's Code of Conduct.
+          required: true
