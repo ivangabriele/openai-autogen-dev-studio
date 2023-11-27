@@ -1,11 +1,11 @@
+import json
 from typing import Union
 from dacite import from_dict
-import json
 import requests
 
 from actions.search_web_types import WebSearchApiResponse
 
-from constants import PROJECT_CONFIG
+from constants import DEFAULT_REQUEST_TIMEOUT, PROJECT_CONFIG
 
 
 def search_web(query: str) -> str:
@@ -14,8 +14,8 @@ def search_web(query: str) -> str:
     # If it's an `str`, that means it's an error
     if isinstance(brave_search_api_result_or_error, str):
         return brave_search_api_result_or_error
-    else:
-        brave_search_api_result = brave_search_api_result_or_error
+
+    brave_search_api_result = brave_search_api_result_or_error
 
     # Simplify the data
     simplified_response_data = {
@@ -62,7 +62,9 @@ def _fetch_brave_search_api(query: str) -> Union[WebSearchApiResponse, str]:
         "extra_snippets": "true",
     }
 
-    response = requests.get(endpoint, headers=headers, params=params)
+    response = requests.get(
+        endpoint, headers=headers, params=params, timeout=DEFAULT_REQUEST_TIMEOUT
+    )
 
     if response.status_code != 200:
         return f"Error: {response.status_code} - {response.reason}"

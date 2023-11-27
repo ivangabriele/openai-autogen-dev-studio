@@ -12,11 +12,7 @@ def test_clean_text():
         )
         == "A todo list:\n- Do this.\n- And do that."
     )
-
     assert utils.clean_text("  Hello   World  ") == "Hello World"
-
     assert utils.clean_text("Hello") == "Hello"
-
     assert utils.clean_text("") == ""
-
     assert utils.clean_text("   ") == ""

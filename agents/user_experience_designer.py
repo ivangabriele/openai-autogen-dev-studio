@@ -1,38 +1,29 @@
-import autogen
+from agents.base_agent import BaseAgent
+from agents.ceo import CEO
+from agents.planner import Planner
+import utils
 
-import agents
-from constants import COMMON_LLM_CONFIG
-from utils import clean_text
 
-
-class UserExperienceDesigner(agents.BaseAgent):
-    def __init__(self) -> None:
-        self.as_assistant_agent = autogen.AssistantAgent(
-            "User_Experience_Designer",
-            llm_config=COMMON_LLM_CONFIG,
-            system_message=clean_text(
+class UserExperienceDesigner(BaseAgent):
+    def __init__(self, ceo: CEO, planner: Planner):
+        super().__init__(
+            name="User Experience Designer",
+            system_message=utils.clean_text(
                 """
                 You are the User Experience Designer.
 
-                You are part of a team including a Product Owner and a Software Engineer.
+                You work for the Product Owner to create a program.
 
-                Your role is to design the program UI and UX.
+                You are part of a core team which is managed by the Product Owner and is composed of:
+                - A Software Engineer who will code, test and run the program.
+                - A User Experience Designer (yourself) who will design the program.
 
-                The Product Owner is your team manager.
-                The Product Owner will tell you what to do, don't answer to the CEO yourself.
-
-                Rules:
-                - Keep it short. Get to the point. Be straightforward. Always specify your recipient's name.
-                - Only reply to messages prefixed with your name, i.e.: "User Experience Designer, etc".
-                - Only communicate with the Product Owner, and nobody else.
-                - Keep it short. Get to the point. Be straightforward. Specify your recipient's name.
-                - Use a `DESIGN.md` file to keep a memo of your analyses. ALWAYS check for its content when you start.
-
-                In order to help with your tasks, you can ask the Functioneer to do the following for you:
-                - Get a web page content by it URL.
-                - Read a project file.
-                - Search the web.
-                - Write a project file.
+                You're also personally assisted by:
+                - A Functioneer who will run commands and write documentation for you within the decicated project directory.
+                  This is the only way you can interact with the real world.
                 """
             ),
+            tasks_file_name="KANBAN.json",
+            ceo=ceo,
+            planner=planner,
         )

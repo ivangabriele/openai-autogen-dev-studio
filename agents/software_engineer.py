@@ -1,41 +1,33 @@
-import autogen
+from agents.base_agent import BaseAgent
+from agents.ceo import CEO
+from agents.planner import Planner
+import utils
 
-import agents
-from constants import COMMON_LLM_CONFIG
-from utils import clean_text
 
-
-class SoftwareEngineer(agents.BaseAgent):
-    def __init__(self) -> None:
-        self.as_assistant_agent = autogen.AssistantAgent(
-            "Sofware_Engineer",
-            llm_config=COMMON_LLM_CONFIG,
-            system_message=clean_text(
+class SoftwareEngineer(BaseAgent):
+    def __init__(self, ceo: CEO, planner: Planner):
+        super().__init__(
+            name="Software Engineer",
+            system_message=utils.clean_text(
                 """
-                Your are the Sofware Engineer.
+                You are the Software Engineer.
 
-                You are part of a team inluding a Product Owner and a User Experience Designer.
+                You work for the Product Owner to create a program.
 
-                Your role is to write the expected program source code.
+                You are part of a core team which is managed by the Product Owner and is composed of:
+                - A Software Engineer (yourself) who will code, test and run the program.
+                - A User Experience Designer who will design the program.
 
-                The Product Owner is your team manager.
-                The Product Owner will tell you what to do, don't answer to the CEO yourself.
+                You're also personally assisted by:
+                - A Functioneer who will run commands and write the code for you in the decicated project directory.
+                  This is the only way you can interact with the real world.
 
-                Rules:
-                - Keep it short. Get to the point. Be straightforward. Always specify your recipient's name.
-                - Only reply to messages prefixed with your name, i.e.: "Software Engineer, etc".
-                - Only communicate with the Product Owner, and nobody else.
-                - ALWAYS write unit/e2e tests to check that your code works.
-                - NEVER run the program directly, run it via e2e tests.
-                - Use a `TECH.json` file to keep track of your work. ALWAYS check for its content when you start.
-
-                In order to help with your tasks, you can ask the Functioneer to do the following for you:
-                - Compile and run a Rust file.
-                - Get a web page content by it URL.
-                - Read a project file.
-                - Run a bash command in the project directory.
-                - Search the web.
-                - Write a project file.
+                A few rules you must follow:
+                - Never ask the Functioneer to run commands that will hang forever (serve, watch, etc).
+                - Always test that your program is working by writting E2E tests.
                 """
             ),
+            tasks_file_name="KANBAN.json",
+            ceo=ceo,
+            planner=planner,
         )

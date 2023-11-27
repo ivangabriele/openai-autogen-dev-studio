@@ -1,4 +1,3 @@
-import pytest
 from actions import run_bash_command
 
 

@@ -18,14 +18,14 @@ def fetch_web_page(url: str) -> str:
         body_tag = soup.body if soup.body else soup
         for tag in body_tag.find_all(True):
             if tag.name != "a":
-                if tag.name == "script" or tag.name == "style":
+                if tag.name in ("script", "style"):
                     tag.extract()
                 else:
                     tag.unwrap()
         if soup.html:
             soup.html.unwrap()
 
-        markdown_lines = _extract_content(body_tag)
+        markdown_lines = _extract_content(tag=body_tag, markdown_lines=None)
 
         markdown_source = " ".join(markdown_lines)
         markdown_source = re.sub(r"\s+", " ", markdown_source)
@@ -42,7 +42,10 @@ def fetch_web_page(url: str) -> str:
         return f"An error occurred: {e}"
 
 
-def _extract_content(tag: Tag, markdown_lines: List[str] = []) -> List[str]:
+def _extract_content(tag: Tag, markdown_lines: List[str] | None) -> List[str]:
+    if markdown_lines is None:
+        markdown_lines = []
+
     for child in tag.children:
         if isinstance(child, NavigableString):
             if child.strip():  # Only non-empty strings

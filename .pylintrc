@@ -5,5 +5,5 @@ max-line-length=120
 ignore-paths=.cache,__pycache__
 
 [MESSAGES CONTROL]
-; TODO Re-enable these checks before releasing the first version.
-disable=C0301,C0114,C0115,C0116
+; TODO Re-enable some of these checks before releasing the first version.
+disable=C0301,C0114,C0115,C0116,R0801,R0902,R0903,W0511,W0718

@@ -23,40 +23,52 @@ jobs:
       - name: Install dependencies
         run: poetry install
 
-      - name: Setup Lint
-        run: cp ./env.sample.jsonc ./env.jsonc
+      - name: Setup Envs (OpenAI)
+        run: cp ./env.openai-sample.jsonc ./env.jsonc
 
       - name: Lint
         run: make lint
 
-  # type:
-  #   name: Type
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout code
-  #       uses: actions/checkout@v4
+      - name: Setup Envs (OpenSource)
+        run: cp ./env.opensource-sample.jsonc ./env.jsonc
 
-  #     - name: Setup Python
-  #       uses: actions/setup-python@v4
-  #       with:
-  #         python-version: "3.10"
+      - name: Lint
+        run: make lint
 
-  #     - name: Install Poetry
-  #       uses: snok/install-poetry@v1
-  #       with:
-  #         version: "1.6.1"
+  type:
+    name: Type
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-  #     - name: Install mypy
-  #       run: pip install mypy
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
 
-  #     - name: Install dependencies
-  #       run: poetry install
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+        with:
+          version: "1.6.1"
 
-  #     - name: Setup Types
-  #       run: cp ./env.sample.jsonc ./env.jsonc
+      - name: Install mypy
+        run: pip install mypy
 
-  #     - name: Check Types
-  #       run: make type
+      - name: Install dependencies
+        run: poetry install
+
+      - name: Setup Envs (OpenAI)
+        run: cp ./env.openai-sample.jsonc ./env.jsonc
+
+      - name: Check Types
+        run: make type
+
+      - name: Setup Envs (OpenSource)
+        run: cp ./env.opensource-sample.jsonc ./env.jsonc
+
+      - name: Check Types
+        run: make type
 
   test:
     name: Unit Test
@@ -78,8 +90,14 @@ jobs:
       - name: Install dependencies
         run: poetry install
 
-      - name: Setup Unit Tests
-        run: cp ./env.sample.jsonc ./env.jsonc
+      - name: Setup Envs (OpenAI)
+        run: cp ./env.openai-sample.jsonc ./env.jsonc
+
+      - name: Run Unit Tests
+        run: make test
+
+      - name: Setup Envs (OpenSource)
+        run: cp ./env.opensource-sample.jsonc ./env.jsonc
 
       - name: Run Unit Tests
         run: make test
