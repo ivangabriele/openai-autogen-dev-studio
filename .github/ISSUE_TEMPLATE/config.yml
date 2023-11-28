@@ -1,8 +1,5 @@
 blank_issues_enabled: false
 contact_links:
-  - name: Developer Bug Report
-    url: https://github.com/ivangabriele/openai-autogen-dev-studio/issues/new?template=developer_bug_report.yml
-    about: File a bug report as a developer (issues related to the source code).
   - name: Feature Request
     url: https://github.com/ivangabriele/openai-autogen-dev-studio/discussions/categories/feature-request-proposals
     about: Please submit feature requests and proposals there.
